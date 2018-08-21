@@ -70,7 +70,12 @@ def infer(X_test, Y_test):
     print('Loss : {}'.format(loss))
 
 def main(opts):
-	# you can change the hours to predict pm2.5
+    #create empty directory for saving model
+    save_model_path = 'linear_regression_params/'
+    if not os.path.isdir(save_model_path):
+        os.mkdir(save_model_path)
+
+    # you can change the hours to predict pm2.5
 	hour_prior = 5
 	#Load data
 	X, Y = load_data(opts.data_path, hour_prior)
