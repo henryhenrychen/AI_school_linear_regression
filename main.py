@@ -23,7 +23,7 @@ def load_data(data_path, hour_prior):
     """
     data = pd.read_csv('train.csv')
     data.drop(data.columns[[0, 1]], axis=1, inplace=True)
-    data = data.as_matrix()
+    data = data.values
     raw = np.ravel(data) #flatten matrix to 1-D array
     total_month = 12
     X = []
@@ -35,12 +35,12 @@ def load_data(data_path, hour_prior):
             X.append(x)
             # y is value of pm2.5 of [hour6]
             Y.append(raw[m*480 + d + hour_prior])
-    X = np.array(X)
-    Y = np.array(Y)
+            X = np.array(X)
+            Y = np.array(Y)
     return X, Y
 def plot_result(predicted, Y):
-	#given predicted y and true Y from training data
-	#save the plot
+    #given predicted y and true Y from training data
+    #save the plot
     fig, ax = plt.subplots()
     ax.scatter(Y, predicted)
     ax.plot([Y.min(), Y.max()], [Y.min(), Y.max()], 'k--', lw=4)
@@ -60,11 +60,11 @@ def train(X_train, Y_train):
     # Compile model
 
     # TODO, 4
-    # Start training
+    # Start training and save model
 
 
 def infer(X_test, Y_test):
-	# TODO, 5
+    # TODO, 5
     # load and inference
 
     print('Loss : {}'.format(loss))
@@ -76,21 +76,23 @@ def main(opts):
         os.mkdir(save_model_path)
 
     # you can change the hours to predict pm2.5
-	hour_prior = 5
-	#Load data
-	X, Y = load_data(opts.data_path, hour_prior)
-	#split data into training and testing
-	X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
+    hour_prior = 5
+    #Load data
+    X, Y = load_data(opts.data_path, hour_prior)
+    #split data into training and testing
+    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
 
-	train(X_train, Y_train)
-	infer(X_test, Y_test)
+    print('Training:')
+    train(X_train, Y_train)
+    print('Test: ')
+    infer(X_test, Y_test)
 
 if __name__ == '__main__' :
-	parser = argparse.ArgumentParser(description='Linear Regression with Gradient Descent Method')
-	group = parser.add_mutually_exclusive_group()
-	parser.add_argument('--data_path', type=str, default='train.csv', help='path to data')
-	opts = parser.parse_args()
-	main(opts)
+    parser = argparse.ArgumentParser(description='Linear Regression with Gradient Descent Method')
+    group = parser.add_mutually_exclusive_group()
+    parser.add_argument('--data_path', type=str, default='train.csv', help='path to data')
+    opts = parser.parse_args()
+    main(opts)
 
 
 

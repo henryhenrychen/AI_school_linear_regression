@@ -35,12 +35,12 @@ def load_data(data_path, hour_prior):
             X.append(x)
             # y is value of pm2.5 of [hour6]
             Y.append(raw[m*480 + d + hour_prior])
-    X = np.array(X)
-    Y = np.array(Y)
+            X = np.array(X)
+            Y = np.array(Y)
     return X, Y
 def plot_result(predicted, Y):
-	#given predicted y and true Y from training data
-	#save the plot
+    #given predicted y and true Y from training data
+    #save the plot
     fig, ax = plt.subplots()
     ax.scatter(Y, predicted)
     ax.plot([Y.min(), Y.max()], [Y.min(), Y.max()], 'k--', lw=4)
@@ -75,7 +75,7 @@ def train(X_train, Y_train):
     model.save('./linear_regression_params/model.h5')
 
 def infer(X_test, Y_test):
-	# TODO, 5
+    # TODO, 5
     # load and inference
     model = load_model('./linear_regression_params/model.h5')
     predict = model.predict(X_test)
@@ -103,11 +103,11 @@ def main(opts):
     infer(X_test, Y_test)
 
 if __name__ == '__main__' :
-	parser = argparse.ArgumentParser(description='Linear Regression with Gradient Descent Method')
-	group = parser.add_mutually_exclusive_group()
-	parser.add_argument('--data_path', type=str, default='train.csv', help='path to data')
-	opts = parser.parse_args()
-	main(opts)
+    parser = argparse.ArgumentParser(description='Linear Regression with Gradient Descent Method')
+    group = parser.add_mutually_exclusive_group()
+    parser.add_argument('--data_path', type=str, default='train.csv', help='path to data')
+    opts = parser.parse_args()
+    main(opts)
 
 
 
