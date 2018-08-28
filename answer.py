@@ -84,6 +84,28 @@ def infer(X_test, Y_test):
 
     print('Loss : {}'.format(loss))
 
+def predict_by_input(hour_prior):
+    model_path = './linear_regression_params/model.h5'
+    if not os.path.isfile(model_path) :
+        raise ValueError('You have no save model')
+    model = load_model(model_path)
+    inputs = []
+    print('Start input')
+    i = 0
+    while i < hour_prior :
+        a = input('input no.%d value:'%i+1)
+        if a == '' :
+            break 
+        else :
+            try:
+                a = int(a)
+                inputs.append(a)
+                i += 1
+            except:
+                print('what you typed is not a valid number')
+    X_test = np.array([inputs])
+    out = model.predict(X_test)[0]
+    print('Your predicted PM2.5 is :', out)
 def main(opts):
     #create empty directory for saving model
     save_model_path = 'linear_regression_params/'
@@ -93,19 +115,24 @@ def main(opts):
     # you can change the hours to predict pm2.5
     hour_prior = 5
     #Load data
-    X, Y = load_data(opts.data_path, hour_prior)
-    #split data into training and testing
-    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
+    
+    if opts.input_inference :
+        predict_by_input(hour_prior)
+    else :
+        X, Y = load_data(opts.data_path, hour_prior)
+        #split data into training and testing
+        X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
 
-    print('Training:')
-    train(X_train, Y_train)
-    print('Test: ')
-    infer(X_test, Y_test)
+        print('Training:')
+        train(X_train, Y_train)
+        print('Test: ')
+        infer(X_test, Y_test)
 
 if __name__ == '__main__' :
     parser = argparse.ArgumentParser(description='Linear Regression with Gradient Descent Method')
     group = parser.add_mutually_exclusive_group()
     parser.add_argument('--data_path', type=str, default='train.csv', help='path to data')
+    parser.add_argument('--input_inference', action='store_true', help='inference with input data')
     opts = parser.parse_args()
     main(opts)
 
