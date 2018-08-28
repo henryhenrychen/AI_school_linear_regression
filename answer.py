@@ -56,7 +56,7 @@ def train(X_train, Y_train):
     #Define model arch
     feat_dim = X_train.shape[1]
     model = Sequential()
-    model.add(Dense(units=1, kernel_initializer='zero', input_dim=feat_dim, use_bias=True))
+    model.add(Dense(units=1, input_dim=feat_dim, use_bias=True))
     # output = dot(input, weight) + bias
 
     # TODO, 2
