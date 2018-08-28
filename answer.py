@@ -3,6 +3,8 @@ import sys
 import argparse
 import numpy as np
 import pandas as pd
+import matplotlib
+matplotlib.use('agg')
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 
@@ -55,8 +57,6 @@ def train(X_train, Y_train):
     feat_dim = X_train.shape[1]
     model = Sequential()
     model.add(Dense(units=1, kernel_initializer='zero', input_dim=feat_dim, use_bias=True))
-    # now the model will take as input arrays of shape (*, in４put_shape)
-    # and output arrays of shape (*, 1)
     # output = dot(input, weight) + bias
 
     # TODO, 2
