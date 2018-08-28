@@ -93,7 +93,7 @@ def predict_by_input(hour_prior):
     print('Start input')
     i = 0
     while i < hour_prior :
-        a = input('input no.%d value:'%i+1)
+        a = input('input no.%d value:'%(i+1))
         if a == '' :
             break 
         else :
@@ -103,6 +103,8 @@ def predict_by_input(hour_prior):
                 i += 1
             except:
                 print('what you typed is not a valid number')
+    if hour_prior != len(inputs):
+        raise ValueError('input Length doesn\'t correspond to hour_prior')
     X_test = np.array([inputs])
     out = model.predict(X_test)[0]
     print('Your predicted PM2.5 is :', out)

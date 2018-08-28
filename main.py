@@ -54,20 +54,25 @@ def train(X_train, Y_train):
 
     #TODO, 1
     #Define model arch
+    model = ......
+    # output = dot(input, weight) + bias
 
     # TODO, 2
     # Define optimizer
+    #you can also change the learning rate
 
     # TODO, 3
     # Compile model
 
     # TODO, 4
-    # Start training and save model
+    # Start training
 
+    model.save('./linear_regression_params/model.h5')
 
 def infer(X_test, Y_test):
     # TODO, 5
     # load and inference
+    model = load_model('./linear_regression_params/model.h5')
     predict = ......
     plot_result(predict, Y_test)
     loss = ......
@@ -83,7 +88,7 @@ def predict_by_input(hour_prior):
     print('Start input')
     i = 0
     while i < hour_prior :
-        a = input('input no.%d value:'%i+1)
+        a = input('input no.%d value:'%(i+1))
         if a == '' :
             break 
         else :
@@ -93,6 +98,8 @@ def predict_by_input(hour_prior):
                 i += 1
             except:
                 print('what you typed is not a valid number')
+    if hour_prior != len(inputs):
+        raise ValueError('input Length doesn\'t correspond to hour_prior')
     X_test = np.array([inputs])
     out = model.predict(X_test)[0]
     print('Your predicted PM2.5 is :', out)
