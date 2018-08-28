@@ -37,8 +37,8 @@ def load_data(data_path, hour_prior):
             X.append(x)
             # y is value of pm2.5 of [hour6]
             Y.append(raw[m*480 + d + hour_prior])
-            X = np.array(X)
-            Y = np.array(Y)
+    X = np.array(X)
+    Y = np.array(Y)
     return X, Y
 def plot_result(predicted, Y):
     #given predicted y and true Y from training data
@@ -62,12 +62,16 @@ def train(X_train, Y_train):
     # Compile model
 
     # TODO, 4
-    # Start training and save model
+    # Start training and save the model 
 
 
 def infer(X_test, Y_test):
     # TODO, 5
     # load and inference
+    predict = ......
+    loss = ......
+    
+    plot_result(predict, Y_test)
 
     print('Loss : {}'.format(loss))
 
